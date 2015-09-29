@@ -106,6 +106,16 @@ public class DataTable {
 		return dt;
 	}
 	
+	public DataTable filterNotEqual(String collumn, Object value) {
+		DataTable dt = this;		
+		for(int i = 0; i < dt.rows.size(); i++){
+			if(dt.rows.get(i).getValue(collumn) == value){
+				dt.rows.remove(i);
+			}
+		}		
+		return dt;
+	}
+	
 	public DataTable sortAscending(String collumn) {
 		return null;
 	}
