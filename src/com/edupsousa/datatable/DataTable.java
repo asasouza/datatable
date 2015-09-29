@@ -97,7 +97,13 @@ public class DataTable {
 	}
 	
 	public DataTable filterEqual(String collumn, Object value) {
-		return null;
+		DataTable dt = this;		
+		for(int i = 0; i < dt.rows.size(); i++){
+			if(dt.rows.get(i).getValue(collumn) != value){
+				dt.rows.remove(i);
+			}
+		}		
+		return dt;
 	}
 	
 	public DataTable sortAscending(String collumn) {
