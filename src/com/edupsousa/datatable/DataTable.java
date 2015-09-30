@@ -72,26 +72,13 @@ public class DataTable {
 	}
 
 	public String export(int format) {
-		DataTableRow row;
-		String output = "";
-		if (format == DataTable.FORMAT_CSV) {
-			for (String collumnName : columnsTypes.keySet()) {
-				output += collumnName + ";";
-			}
-			output += "\n";
-			for (int i = 0; i < this.rowsCount(); i++) {
-				row = this.getRow(i);
-				for (String collumnName : columnsTypes.keySet()) {
-					if (columnsTypes.get(collumnName) == DataTable.TYPE_STRING) {
-						output += "\"" + row.getValue(collumnName) + "\";";
-					} else {
-						output += row.getValue(collumnName) + ";";
-					}
-				}
-				output += "\n";
-			}
+		ExportFormat ef;
+		if(format == 0){
+			ef = new ExportCsv();
+		}else{
+			ef = new ExportHtml();
 		}
-		return output;
+		return ef.export(this, columnsTypes);
 	}
 
 	public void insertRowAt(DataTableRow row, int index) {
