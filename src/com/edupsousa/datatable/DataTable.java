@@ -73,9 +73,9 @@ public class DataTable {
 
 	public String export(int format) {
 		ExportFormat ef;
-		if(format == 0){
+		if (format == 0) {
 			ef = new ExportCsv();
-		}else{
+		} else {
 			ef = new ExportHtml();
 		}
 		return ef.export(this, columnsTypes);
@@ -114,19 +114,14 @@ public class DataTable {
 				for (int j = 0; j < dt.rows.size() - 1; j++) {
 					if ((int) dt.rows.get(j).getValue(collumn) > (int) dt.rows
 							.get(j + 1).getValue(collumn)) {
-						DataTableRow menor = dt.rows.get(j + 1);
-						DataTableRow maior = dt.rows.get(j);
-						dt.rows.remove(j);
-						dt.rows.remove(j);
-						dt.rows.add(j, maior);
-						dt.rows.add(j, menor);
+						sort(dt, j);
 					}
 				}
 			}
 		}
 		return dt;
 	}
-	
+
 	public DataTable sortDescending(String collumn) {
 		DataTable dt = this;
 		if (dt.getCollumnType(collumn) == 1) {
@@ -136,16 +131,20 @@ public class DataTable {
 				for (int j = 0; j < dt.rows.size() - 1; j++) {
 					if ((int) dt.rows.get(j).getValue(collumn) < (int) dt.rows
 							.get(j + 1).getValue(collumn)) {
-						DataTableRow menor = dt.rows.get(j + 1);
-						DataTableRow maior = dt.rows.get(j);
-						dt.rows.remove(j);
-						dt.rows.remove(j);
-						dt.rows.add(j, maior);
-						dt.rows.add(j, menor);
+						sort(dt, j);
 					}
 				}
 			}
 		}
 		return dt;
+	}
+
+	public void sort(DataTable dt, int j) {
+		DataTableRow menor = dt.rows.get(j + 1);
+		DataTableRow maior = dt.rows.get(j);
+		dt.rows.remove(j);
+		dt.rows.remove(j);
+		dt.rows.add(j, maior);
+		dt.rows.add(j, menor);
 	}
 }
